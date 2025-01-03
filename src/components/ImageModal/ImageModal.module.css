@@ -1,0 +1,11 @@
+.modalContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+}
