@@ -1,24 +1,23 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./ImageCard.module.css";
 
-const ImageCard = ({ src, alt, onClick }) => {
+interface ImageCardProps {
+  src: string;
+  alt?: string;
+  onClick: () => void;
+}
+
+const ImageCard: React.FC<ImageCardProps> = ({ src, alt = "Image", onClick }) => {
   return (
     <div className={styles.card}>
       <img
         src={src}
-        alt={alt || "Image"}
+        alt={alt}
         className={styles.image}
         onClick={onClick}
       />
     </div>
   );
-};
-
-ImageCard.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default ImageCard;

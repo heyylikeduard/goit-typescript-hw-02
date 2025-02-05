@@ -8,17 +8,35 @@ import ImageModal from "./components/ImageModal/ImageModal";
 import axios from "axios";
 import "./App.css";
 
-const App = () => {
-  const [query, setQuery] = useState("");
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalImage, setModalImage] = useState({ url: "", alt: "" });
+// Тип для зображення з API
+interface Image {
+  id: string;
+  urls: { small: string };
+  alt_description: string;
+}
 
-  const handleSearch = async (searchQuery) => {
+// Тип для відповіді з API
+interface ApiResponse {
+  results: Image[];
+}
+
+// Тип для об'єкта модального зображення
+interface ModalImage {
+  url: string;
+  alt: string;
+}
+
+const App: React.FC = () => {
+  const [query, setQuery] = useState<string>("");
+  const [images, setImages] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [modalImage, setModalImage] = useState<ModalImage>({ url: "", alt: "" });
+
+  const handleSearch = async (searchQuery: string) => {
     setQuery(searchQuery);
     setImages([]);
     setPage(1);
@@ -27,7 +45,7 @@ const App = () => {
     setError(null);
 
     try {
-      const response = await axios.get(
+      const response = await axios.get<ApiResponse>(
         `https://api.unsplash.com/search/photos?query=${searchQuery}&page=1&per_page=12&client_id=aiRIM7Mx4-GMqgq9zm5dng13ZGkM2xh0HxgJDxshKZc`
       );
       setImages(response.data.results);
@@ -45,7 +63,7 @@ const App = () => {
     setError(null);
 
     try {
-      const response = await axios.get(
+      const response = await axios.get<ApiResponse>(
         `https://api.unsplash.com/search/photos?query=${query}&page=${
           page + 1
         }&per_page=12&client_id=aiRIM7Mx4-GMqgq9zm5dng13ZGkM2xh0HxgJDxshKZc`
@@ -61,7 +79,7 @@ const App = () => {
     }
   };
 
-  const openModal = (imageUrl, imageAlt) => {
+  const openModal = (imageUrl: string, imageAlt: string) => {
     setModalImage({ url: imageUrl, alt: imageAlt });
     setModalIsOpen(true);
   };

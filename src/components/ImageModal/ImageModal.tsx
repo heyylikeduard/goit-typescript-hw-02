@@ -4,8 +4,20 @@ import styles from "./ImageModal.module.css";
 
 Modal.setAppElement("#root");
 
-const ImageModal = ({ isOpen, onRequestClose, imageUrl, imageAlt }) => {
-  const customStyles = {
+interface ImageModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  imageUrl: string;
+  imageAlt: string;
+}
+
+const ImageModal: React.FC<ImageModalProps> = ({
+  isOpen,
+  onRequestClose,
+  imageUrl,
+  imageAlt,
+}) => {
+  const customStyles: Modal.Styles = {
     content: {
       top: "50%",
       left: "50%",
