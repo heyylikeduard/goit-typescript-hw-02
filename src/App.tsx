@@ -11,7 +11,7 @@ import "./App.css";
 // Тип для зображення з API
 interface Image {
   id: string;
-  urls: { small: string };
+  urls: { small: string; full: string };
   alt_description: string;
 }
 
